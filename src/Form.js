@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Clearbtn from './Clearbtn';
+import './Form.css';
 const uuidv4 = require('uuid/v4');
 
 export default ({ stateFromApp }) => {
-  // console.log(stateFromApp);
   const [input, setInputValue] = useState('');
   const [todos, setTodos] = useState([]);
+  const [isComplete, setIsComplete] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -24,19 +25,21 @@ export default ({ stateFromApp }) => {
   };
   const handleInputChange = e => {
     setInputValue(e.target.value);
-    // document.title = e.target.value;
   };
 
-  let linedT = e => {
-    e.target.style.color = 'red';
-    // e.target.style.display = 'none';
-    // e.target.style.background = 'pink';
-    e.target.style.textDecoration = 'line-through';
+  let toggleTodo = e => {
+    setIsComplete(!isComplete);
+  };
+  let styleT = {
+    color: !isComplete ? 'black' : 'red'
+    // e.target.style.textDecoration = 'line-through'
   };
   let style = {
     background: 'pink'
   };
-
+  let logState = () => {
+    console.log(isComplete);
+  };
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -49,7 +52,11 @@ export default ({ stateFromApp }) => {
       </form>
       <Clearbtn clearNow={clearNow} />
       {todos.map(todo => (
-        <li onClick={linedT} key={uuidv4()}>
+        <li
+          className={isComplete ? 'todoToggled' : 'todo'}
+          onClick={toggleTodo}
+          key={uuidv4()}
+        >
           {todo}
         </li>
       ))}

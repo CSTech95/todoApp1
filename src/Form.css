@@ -1,0 +1,8 @@
+.todo {
+  text-decoration: none;
+  color: black;
+}
+.todoToggled {
+  text-decoration: line-through;
+  color: red;
+}
